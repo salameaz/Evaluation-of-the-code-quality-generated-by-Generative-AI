@@ -19,12 +19,13 @@ Process Overview
 
 4. **Code Quality Evaluation**
    - The generated code is evaluated on three primary metrics:
-     - **Code correctness**:  will be measured on a scale of 5 levels
-         o correct: The code passes all test cases
-         o Partially correct: the code has no errors, but the output differs from the expected output in at most 50% of the test cases.
-         o incorrect: The code has no errors, but the output differs from the expected output in more than 50% of the test cases.
-         o Compilation error: The submitted code cannot be compiled.
-         o Runtime error: The code fails in at least one test case due to a runtime error (ie division by zero, etc.).
+        - **Code correctness**:  will be measured on a scale of 5 levels
+           -    correct: The code passes all test cases
+           -    Prtially correct: the code has no errors, but the output differs from the expected output in at most 50% of the test cases.
+           -    incorrect: The code has no errors, but the output differs from the expected output in more than 50% of the test cases.
+           -    Compilation error: The submitted code cannot be compiled.
+           -    Runtime error: The code fails in at least one test case due to a runtime error (ie division by zero, etc.).
+      
       - **Code Readability**: will be measured using a checklist as a tool for evaluating the generated code based on predefined rules.
          The rules:
             ● A line should not be longer than 120 characters.
