@@ -1,0 +1,11 @@
+﻿question number,ChatGPT,Copilot,Claude,Gemini,,,,GenAI/ correctness,correct,Partially correct,incorrect, Compilation error,Runtime error
+1,correct,Partially correct,Partially correct, Compilation error,,,,ChatGPT,8,0,2,0,0
+2,correct,correct,correct,incorrect,,,,Copilot,2,4,3,1,0
+3,correct, Compilation error,incorrect,incorrect,,,,Gemini,0,1,7,2,0
+10,incorrect,incorrect,Partially correct, Compilation error,,,,Claude,1,4,4,1,0
+11,correct,incorrect,incorrect,Partially correct,,,,,,,,,
+12,incorrect,incorrect, Compilation error,incorrect,,,,,,,,,
+24,correct,Partially correct,Partially correct,incorrect,,,,,,,,,
+25,correct,correct,incorrect,incorrect,,,,,,,,,
+26,correct,Partially correct,incorrect,incorrect,,,,,,,,,
+27,correct,Partially correct,Partially correct,incorrect,,,,,,,,,
