@@ -54,6 +54,6 @@ Process Overview
    
 6. **Continue the same steps as before and at the end conduct a Statistical Testing using T-test for the readability and Mann-Whitney U for the correctness and the complexity**
 
-   -The T-test is easily done is [excel]()
+   -The T-test is easily done is [excel](Statistical_Analysis/code_readability.xlsx)
 
-   -The Mann-Whitney U can be done in python(you can use [this code]() )
+   -The Mann-Whitney U can be done in python([code for code complexity](Statistical_Analysis/complexity_analysis.py),[ code for correctness](Statistical_Analysis/correctness_analysis.py) )
