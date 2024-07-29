@@ -130,9 +130,9 @@ categories_chatgpt_time = ['T:O(n^3)', 'T:O(n^2*log n)', 'T:O(n^2)', 'T:O(n*log 
 categories_chatgpt_time = categories_chatgpt_time[::-1]
 categories_chatgpt_space = ['S:O(n^2)', 'S:O(n)', 'S:O(log n)', 'S:O(1)']
 categories_chatgpt_space = categories_chatgpt_space[::-1]
-categories_copilot_time = ['T:O(n^3)', 'T:O(n^2)', 'T:O(n*log n)', 'T:O(n)', 'T:O(log n)', 'T:O(1)']
+categories_copilot_time = ['T:O(n^3)', 'T:O(n^2*log n)', 'T:O(n^2)', 'T:O(n*log n)', 'T:O(n)', 'T:O(log n)', 'T:O(1)']
 categories_copilot_time = categories_copilot_time[::-1]
-categories_copilot_space = ['S:O(n^2)', 'S:O(n)', 'S:O(1)']
+categories_copilot_space = ['S:O(n^2)', 'S:O(n)', 'S:O(log n)', 'S:O(1)']
 categories_copilot_space = categories_copilot_space[::-1]
 
 df['ChatGPT_time'] = pd.Categorical(df['ChatGPT_time'], categories=categories_chatgpt_time, ordered=True)
