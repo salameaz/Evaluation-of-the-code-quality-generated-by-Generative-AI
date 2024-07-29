@@ -1,0 +1,31 @@
+﻿Q_number,ChatGPT,Copilot,ChatGPT_encoded,Copilot_encoded
+4,correct,correct,5,5
+5,correct,correct,5,5
+6,correct,incorrect,5,3
+7,correct,correct,5,5
+8,partially correct,correct,4,5
+9,correct,incorrect,5,3
+13,incorrect,incorrect,3,3
+14,incorrect,Compilation error,3,2
+15,Compilation error,incorrect,2,3
+16,incorrect,Compilation error,3,2
+17,correct,incorrect,5,3
+18,incorrect,incorrect,3,3
+19,correct,incorrect,5,3
+20,partially correct,incorrect,4,3
+21,incorrect,partially correct,3,4
+22,incorrect,incorrect,3,3
+23,Compilation error,incorrect,2,3
+28,correct,incorrect,5,3
+29,correct,partially correct,5,4
+30,partially correct,incorrect,4,3
+31,correct,correct,5,5
+32,correct,correct,5,5
+33,correct,correct,5,5
+34,Compilation error,partially correct,2,4
+35,correct,correct,5,5
+36,correct,correct,5,5
+37,correct,incorrect,5,3
+38,correct,correct,5,5
+39,partially correct,correct,4,5
+40,correct,correct,5,5
