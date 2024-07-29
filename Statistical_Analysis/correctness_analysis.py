@@ -22,20 +22,20 @@ print(data.head())
 ordinal_mapping = [{
     'col': 'ChatGPT',
     'mapping': {
-        'נכון ': 5,  # Correct
-        'נכון חלקית': 4,  # Partially Correct
-        'לא נכון': 3,  # Incorrect
-        'שגיאת קומפילציה': 2,
-        'שגיאת זמן ריצה': 1
+        "correct": 5,
+        "partially correct": 4,
+        "incorrect": 3,
+        "Compilation error": 2,
+        "Runtime error": 1
     }}]
 ordinal_mapping1 = [{
     'col': 'Copilot',
     'mapping': {
-        'נכון ': 5,  # Correct
-        'נכון חלקית': 4,  # Partially Correct
-        'לא נכון': 3,  # Incorrect
-        'שגיאת קומפילציה': 2,
-        'שגיאת זמן ריצה': 1
+        "correct": 5,
+        "partially correct": 4,
+        "incorrect": 3,
+        "Compilation error": 2,
+        "Runtime error": 1
     }}]
 
 
@@ -93,17 +93,9 @@ plt.show()
 
 #data.to_excel("test2.xlsx",sheet_name="Sheet1",index=False)
 
-# Sample data
-import pandas as pd
-import numpy as np
-
-# Sample data (replace with your actual data)
-data = pd.DataFrame({
-    'ChatGPT': ['נכון', 'נכון חלקית', 'לא נכון', 'נכון', 'שגיאת זמן ריצה', 'לא נכון', 'נכון חלקית', 'נכון חלקית']
-})
 
 # Define the ordered categories
-categories = ['נכון', 'נכון חלקית', 'לא נכון', 'שגיאת קומפילציה', 'שגיאת זמן ריצה']
+categories = ["Runtime error", "Compilation error", "incorrect", "partially correct", "correct"]
 
 # Convert 'ChatGPT' column to categorical
 data['ChatGPT'] = pd.Categorical(data['ChatGPT'], categories=categories, ordered=True)
@@ -136,10 +128,8 @@ iqr = (percentile_values[0], percentile_values[2])
 print("IQR:", iqr)
 
 ##########
-data = pd.DataFrame({
-    'Copilot': ['נכון', 'נכון חלקית', 'לא נכון', 'נכון', 'שגיאת זמן ריצה', 'לא נכון', 'נכון חלקית', 'נכון חלקית']
-})
-categories = ['נכון', 'נכון חלקית', 'לא נכון', 'שגיאת קומפילציה', 'שגיאת זמן ריצה']
+
+categories = ["Runtime error", "Compilation error", "incorrect", "partially correct", "correct"]
 
 # Convert 'ChatGPT' column to categorical
 data['Copilot'] = pd.Categorical(data['Copilot'], categories=categories, ordered=True)
