@@ -8,14 +8,14 @@ Process Overview
 
 1. **Data Collection**
    - A dataset of problems is collected from LeetCode.(you can use the problems we chose availabe [here](original_prompts.csv))
-   - Two subsets of problems are created: an experiment problems dataset and a benchmark problems dataset(we used systematic sampling).
+   - Two subsets of problems are created: an experiment problems dataset with 30 problems and a benchmark problems dataset with 10 problems(we used systematic sampling with equal difficulty levels, you can use whatever you like).
 
 2. **Code Generation**
    - The AI models used in the benchmark are:
    - ChatGPT 4.0, Microsoft Copilot(free version), Claude 3.0 and google gemini are used to generate code solutions for the problems in the benchmark problem datasets.
 
 3. **Generated Code Compilation**
-   - The generated code from each model is compiled into a one [file](Generative_AI_answers/Benchmark_answers.csv)
+   - The generated code from each model is compiled into a one [file](Generative_AI_answers/Benchmark_answers.csv)(40 in total 10 foe each model)
 
 4. **Code Quality Evaluation**
    - The generated code is evaluated on three primary metrics:
@@ -50,7 +50,7 @@ Process Overview
 
 
  5. **Ranking and Comparison**
-   - Choosing the TOP 2 form all of the evaluation metrics 
+   - Choosing the TOP 2 form all of the evaluation metrics, and continue with the main experiment with bigger sample(30) 
    
 6. **Continue the same steps as before and at the end conduct a Statistical Testing using T-test for the readability and Mann-Whitney U for the correctness and the complexity**
 
