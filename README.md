@@ -27,18 +27,19 @@ Process Overview
            -    Runtime error: The code fails in at least one test case due to a runtime error (ie division by zero, etc.).
       
       - **Code Readability**: will be measured using a checklist as a tool for evaluating the generated code based on predefined rules.
-         The rules:
-            ● A line should not be longer than 120 characters.
-            ● The length of the functions should not be more than 20 lines.
-            ● Functions should have no more than three arguments.
-            ● There should be no nested loops more than one level deep.
-            ● There should be no more than one sentence per line.
-            ●Consistent naming conventions for variables, functions and classes
-            ●Clear and descriptive comments explaining the purpose and logic of the code
-            ● Correct indentation and formatting for better visual organization
-            ●Using meaningful and self-documenting variable and function names
-            ● Adherence to coding style guides and Python-specific conventions
-         The final grade will be calculated as the ratio between the number of criteria the code successfully met and the total of all criteria, multiplied by 100.
+         - The rules:
+            - A line should not be longer than 120 characters.
+            - The length of the functions should not be more than 20 lines.
+            - Functions should have no more than three arguments.
+            - There should be no nested loops more than one level deep.
+            - There should be no more than one sentence per line.
+            - Consistent naming conventions for variables, functions and classes
+            - Clear and descriptive comments explaining the purpose and logic of the code
+            - Correct indentation and formatting for better visual organization
+            - Using meaningful and self-documenting variable and function names
+            - Adherence to coding style guides and Python-specific conventions
+      -
+      - The final grade will be calculated as the ratio between the number of criteria the code successfully met and the total of all criteria, multiplied by 100.
 
       - **Code Efficiency**: will be measured by analyzing the complexity of running time and space of the algorithm theoretically without running the code. The result is expressed using a large O notation, which represents the upper limit of the growth rate of the algorithm.
 
