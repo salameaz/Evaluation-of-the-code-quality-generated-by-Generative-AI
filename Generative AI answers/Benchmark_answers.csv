@@ -1,0 +1,1900 @@
+﻿Question Number,prompt,human_generated_code,CHATGPT,COPILOT,CLAUDE,GEMINI,difficulty
+1,"solve the following problem with python3 code. Class name: Solution, Method name: def maxSum(self, nums: List[int]) -> int:.
+
+You are given a 0-indexed integer array nums. You have to find the maximum sum of a pair of numbers from nums such that the maximum digit in both numbers are equal.
+
+Return the maximum sum or -1 if no such pair exists.
+
+Example 1:
+
+Input: nums = [51,71,17,24,42]
+Output: 88
+Explanation: 
+For i = 1 and j = 2, nums[i] and nums[j] have equal maximum digits with a pair sum of 71 + 17 = 88. 
+For i = 3 and j = 4, nums[i] and nums[j] have equal maximum digits with a pair sum of 24 + 42 = 66.
+It can be shown that there are no other pairs with equal maximum digits, so the answer is 88.
+
+Example 2:
+
+Input: nums = [1,2,3,4]
+Output: -1
+Explanation: No pair exists in nums with equal maximum digits.
+
+Constraints:
+
+2 <= nums.length <= 100
+1 <= nums[i] <= 10^4","class Solution:
+    def maxSum(self, nums: List[int]) -> int:
+        max_by_digit = defaultdict(int)
+        max_sum = -1
+
+        for num in nums:
+            digit = max(str(num))
+
+            if digit in max_by_digit:
+                max_sum = max(max_sum, max_by_digit[digit] + num)
+
+            max_by_digit[digit] = max(max_by_digit[digit], num)
+
+        return max_sum","from typing import List
+from collections import defaultdict
+
+class Solution:
+    def maxSum(self, nums: List[int]) -> int:
+        # Function to find the maximum digit in a number
+        def max_digit(num: int) -> int:
+            return max(int(digit) for digit in str(num))
+        
+        # Dictionary to store numbers by their maximum digit
+        max_digit_dict = defaultdict(list)
+        
+        # Populate the dictionary
+        for num in nums:
+            digit = max_digit(num)
+            max_digit_dict[digit].append(num)
+        
+        # Initialize the maximum sum
+        max_sum = -1
+        
+        # Find the maximum sum for pairs with the same maximum digit
+        for numbers in max_digit_dict.values():
+            if len(numbers) > 1:
+                # Sort the numbers in descending order
+                numbers.sort(reverse=True)
+                # Compute the sum of the two largest numbers
+                current_sum = numbers[0] + numbers[1]
+                # Update the maximum sum
+                max_sum = max(max_sum, current_sum)
+        
+        return max_sum
+
+# Example usage:
+solution = Solution()
+print(solution.maxSum([51, 71, 17, 24, 42]))  # Output: 88
+print(solution.maxSum([1, 2, 3, 4]))          # Output: -1","class Solution:
+    def maximumScore(self, nums: List[int], k: int) -> int:
+        # Initialize a dictionary to store the frequency of each number
+        freq = {}
+        for num in nums:
+            freq[num] = freq.get(num, 0) + 1
+
+        # Initialize the maximum score
+        max_score = 1
+
+        # Iterate through the unique numbers in the array
+        for num in set(nums):
+            # Calculate the complement (difference from k)
+            complement = k - num
+
+            # If the complement exists in the dictionary and has positive frequency
+            if complement in freq and freq[complement] > 0:
+                # Calculate the number of times we can use this pair
+                pairs = min(freq[num], freq[complement])
+
+                # Update the maximum score
+                max_score *= pow(num, pairs, 10**9 + 7)
+
+                # Update the frequency of both numbers
+                freq[num] -= pairs
+                freq[complement] -= pairs
+
+        return max_score % (10**9 + 7)
+
+# Example usage
+s = Solution()
+print(s.maximumScore([8, 3, 9, 3, 8], 2))  # Output: 81
+print(s.maximumScore([19, 12, 14, 6, 10, 18], 3))  # Output: 4788","class Solution:
+    def maxSum(self, nums: List[int]) -> int:
+        # Dictionary to store the maximum sum for each maximum digit
+        max_sums = {}
+        
+        for num in nums:
+            # Find the maximum digit in the number
+            max_digit = max(map(int, str(num)))
+            
+            # Update the maximum sum for the maximum digit
+            max_sums[max_digit] = max(max_sums.get(max_digit, 0), max_sums.get(max_digit, 0) + num)
+        
+        # Find the maximum sum from the dictionary
+        max_sum = max(max_sums.values())
+        
+        # Return -1 if no pair exists with equal maximum digits
+        return max_sum if max_sum > 0 else -1","class Solution:
+    def maxSum(self, nums: List[int]) -> int:
+        max_sum = -1
+        # Create a dictionary to store the maximum digit and its corresponding sum
+        digit_sum = {}
+
+        for num in nums:
+            # Extract the maximum digit
+            max_digit = str(num)[-1]
+            # Check if the digit exists in the dictionary
+            if max_digit in digit_sum:
+                # Update the max_sum if the current pair sum is greater
+                max_sum = max(max_sum, digit_sum[max_digit] + num)
+            else:
+                # Add the current number to the dictionary with its sum
+                digit_sum[max_digit] = num
+
+        return max_sum",easy
+2,"Solve the following problem with python3 code. Class name: Solution, Method name: def finalString(self, s: str) -> str:.
+
+Your laptop keyboard is faulty, and whenever you type a character 'i' on it, it reverses the string that you have written. Typing other characters works as expected.
+
+You are given a 0-indexed string s, and you type each character of s using your faulty keyboard.
+
+Return the final string that will be present on your laptop screen.
+
+Example 1:
+
+Input: s = ""string""
+Output: ""rtsng""
+Explanation: 
+After typing first character, the text on the screen is ""s"".
+After the second character, the text is ""st"". 
+After the third character, the text is ""str"".
+Since the fourth character is an 'i', the text gets reversed and becomes ""rts"".
+After the fifth character, the text is ""rtsn"". 
+After the sixth character, the text is ""rtsng"". 
+Therefore, we return ""rtsng"".
+
+Example 2:
+
+Input: s = ""poiinter""
+Output: ""ponter""
+Explanation: 
+After the first character, the text on the screen is ""p"".
+After the second character, the text is ""po"". 
+Since the third character you type is an 'i', the text gets reversed and becomes ""op"". 
+Since the fourth character you type is an 'i', the text gets reversed and becomes ""po"".
+After the fifth character, the text is ""pon"".
+After the sixth character, the text is ""pont"". 
+After the seventh character, the text is ""ponte"". 
+After the eighth character, the text is ""ponter"". 
+Therefore, we return ""ponter"".
+ 
+Constraints:
+
+1 <= s.length <= 100
+s consists of lowercase English letters.
+s[0] != 'i'","class Solution:
+    def finalString(self, s: str) -> str:
+        while ""i"" in s:
+            index=s.index(""i"")
+
+            #first half and second half
+            first=s[:index][::-1]
+            second=s[index+1:]
+
+            s="""".join([first,second])
+        return s","class Solution:
+    def finalString(self, s: str) -> str:
+        result = """"
+        for char in s:
+            if char == 'i':
+                result = result[::-1]  # Reverse the string
+            else:
+                result += char  # Append the character to the result
+        return result
+
+# Example usage:
+solution = Solution()
+print(solution.finalString(""string""))   # Output: ""rtsng""
+print(solution.finalString(""poiinter"")) # Output: ""ponter""","class Solution:
+    def finalString(self, s: str) -> str:
+        result = []
+        for char in s:
+            if char == 'i':
+                # If the character is 'i', reverse the result string
+                result.reverse()
+            else:
+                # Otherwise, append the character to the result
+                result.append(char)
+        return ''.join(result)
+
+# Example usage
+s = Solution()
+print(s.finalString(""string""))  # Output: ""rtsng""
+print(s.finalString(""poiinter""))  # Output: ""ponter""","class Solution:
+    def finalString(self, s: str) -> str:
+        result = []
+        for char in s:
+            if char == 'i':
+                result = result[::-1]
+            else:
+                result.append(char)
+        return ''.join(result)","class Solution:
+  def finalString(self, s: str) -> str:
+      """"""
+      Simulates typing the string with a faulty keyboard and returns the final string.
+
+      Args:
+          s: The original string to be typed.
+
+      Returns:
+          The final string displayed on the screen after typing all characters in s.
+      """"""
+      reversed_string = """"
+      
+      for char in s:
+          if char == 'i':
+              # Append the reversed string when encountering 'i'
+              reversed_string = reversed_string + s[::-1]
+              s = """"  # Reset the original string for next character
+          else:
+              # Append other characters normally
+              s = char + s
+      
+      # Add the remaining characters (no 'i') after the loop
+      return reversed_string + s",easy
+3,"solve the following problem with python3 code. Class name: Solution, Method name: def maxAllNumber(self, nums: List[int]) -> int:.
+
+You are given a 0-indexed integer array nums. You have to find the maximum sum of a pair of numbers from nums such that the maximum digit in both numbers are equal.
+
+Return the maximum sum or -1 if no such pair exists.
+
+Example 1:
+
+Input: nums = [51,71,17,24,42]
+Output: 88
+Explanation: 
+For i = 1 and j = 2, nums[i] and nums[j] have equal maximum digits with a pair sum of 71 + 17 = 88. 
+For i = 3 and j = 4, nums[i] and nums[j] have equal maximum digits with a pair sum of 24 + 42 = 66.
+It can be shown that there are no other pairs with equal maximum digits, so the answer is 88.
+
+Example 2:
+
+Input: nums = [1,2,3,4]
+Output: -1
+Explanation: No pair exists in nums with equal maximum digits.
+
+Constraints:
+
+2 <= nums.length <= 100
+1 <= nums[i] <= 10^4","class Solution:
+    def maxAllNumber(self, nums: List[int]) -> int:
+        max_by_digit = defaultdict(int)
+        max_sum = -1
+
+        for num in nums:
+            digit = max(str(num))
+
+            if digit in max_by_digit:
+                max_sum = max(max_sum, max_by_digit[digit] + num)
+
+            max_by_digit[digit] = max(max_by_digit[digit], num)
+
+        return max_sum","from typing import List
+from collections import defaultdict
+
+class Solution:
+    def maxAllNumber(self, nums: List[int]) -> int:
+        # Function to find the maximum digit in a number
+        def max_digit(num: int) -> int:
+            return max(int(digit) for digit in str(num))
+        
+        # Dictionary to store lists of numbers by their maximum digit
+        max_digit_map = defaultdict(list)
+        
+        # Populate the dictionary with numbers grouped by their maximum digit
+        for num in nums:
+            digit = max_digit(num)
+            max_digit_map[digit].append(num)
+        
+        max_sum = -1
+        
+        # Iterate through each list in the dictionary
+        for num_list in max_digit_map.values():
+            if len(num_list) > 1:
+                # Sort the list in descending order and pick the two largest numbers
+                num_list.sort(reverse=True)
+                current_sum = num_list[0] + num_list[1]
+                # Update max_sum if the current_sum is greater
+                if current_sum > max_sum:
+                    max_sum = current_sum
+        
+        return max_sum","from typing import List
+
+class Solution:
+    def maxAllNumber(self, nums: List[int]) -> int:
+        # Initialize a dictionary to store the maximum digit for each number
+        max_digit = {}
+        
+        # Iterate through the array and find the maximum digit for each number
+        for num in nums:
+            max_digit[num] = max(max_digit.get(num, 0), max(str(num)))
+        
+        # Initialize the maximum sum
+        max_sum = -1
+        
+        # Iterate through all pairs of numbers
+        for i in range(len(nums)):
+            for j in range(i + 1, len(nums)):
+                if max_digit[nums[i]] == max_digit[nums[j]]:
+                    max_sum = max(max_sum, nums[i] + nums[j])
+        
+        return max_sum
+
+# Example usage
+solution = Solution()
+print(solution.maxSum([51, 71, 17, 24, 42]))  # Output: 88
+print(solution.maxSum([1, 2, 3, 4]))         # Output: -1","class Solution:
+    def maxAllNumber(self, nums: List[int]) -> int:
+        # Create a dictionary to store the maximum sum for each maximum digit
+        max_sums = {}
+        
+        # Iterate through the list
+        for num in nums:
+            # Find the maximum digit in the current number
+            max_digit = max(map(int, str(num)))
+            
+            # Update the maximum sum for the current maximum digit
+            max_sums[max_digit] = max(max_sums.get(max_digit, 0), max_sums.get(max_digit, 0) + num)
+        
+        # Find the maximum sum from the dictionary values
+        result = max(max_sums.values()) if max_sums else -1
+        
+        return result","class Solution:
+  def maxAllNumber(self, nums: List[int]) -> int:
+    # Create a dictionary to store the maximum digit and its corresponding sum with other numbers having the same maximum digit.
+    max_digit_sum = {}
+    max_sum = -1
+
+    for num in nums:
+      # Extract the maximum digit
+      max_digit = str(num)[-1]
+      
+      # Check if there's already an entry for this maximum digit
+      if max_digit in max_digit_sum:
+        # Update the sum with the current number if it leads to a larger sum
+        max_digit_sum[max_digit] = max(max_digit_sum[max_digit], num + max_digit_sum[max_digit])
+      else:
+        # Create a new entry with the current number itself
+        max_digit_sum[max_digit] = num
+
+    # Iterate through the dictionary to find the maximum sum
+    for value in max_digit_sum.values():
+      max_sum = max(max_sum, value)
+
+    return max_sum",easy
+10,"Solve the following problem with python3 code. Class name: Solution, Method name: def maximumScore(self, nums: List[int], k: int) -> int:.
+
+You are given an array nums of n positive integers and an integer k.
+
+Initially, you start with a score of 1. You have to maximize your score by applying the following operation at most k times:
+
+Choose any non-empty subarray nums[l, ..., r] that you haven't chosen previously.
+Choose an element x of nums[l, ..., r] with the highest prime score. If multiple such elements exist, choose the one with the smallest index.
+Multiply your score by x.
+Here, nums[l, ..., r] denotes the subarray of nums starting at index l and ending at the index r, both ends being inclusive.
+
+The prime score of an integer x is equal to the number of distinct prime factors of x. For example, the prime score of 300 is 3 since 300 = 2 * 2 * 3 * 5 * 5.
+
+Return the maximum possible score after applying at most k operations.
+
+Since the answer may be large, return it modulo 10^9 + 7.
+
+Example 1:
+
+Input: nums = [8,3,9,3,8], k = 2
+Output: 81
+Explanation: To get a score of 81, we can apply the following operations:
+- Choose subarray nums[2, ..., 2]. nums[2] is the only element in this subarray. Hence, we multiply the score by nums[2]. The score becomes 1 * 9 = 9.
+- Choose subarray nums[2, ..., 3]. Both nums[2] and nums[3] have a prime score of 1, but nums[2] has the smaller index. Hence, we multiply the score by nums[2]. The score becomes 9 * 9 = 81.
+It can be proven that 81 is the highest score one can obtain.
+
+Example 2:
+
+Input: nums = [19,12,14,6,10,18], k = 3
+Output: 4788
+Explanation: To get a score of 4788, we can apply the following operations: 
+- Choose subarray nums[0, ..., 0]. nums[0] is the only element in this subarray. Hence, we multiply the score by nums[0]. The score becomes 1 * 19 = 19.
+- Choose subarray nums[5, ..., 5]. nums[5] is the only element in this subarray. Hence, we multiply the score by nums[5]. The score becomes 19 * 18 = 342.
+- Choose subarray nums[2, ..., 3]. Both nums[2] and nums[3] have a prime score of 2, but nums[2] has the smaller index. Hence, we multipy the score by nums[2]. The score becomes 342 * 14 = 4788.
+It can be proven that 4788 is the highest score one can obtain.
+ 
+Constraints:
+
+1 <= nums.length == n <= 10^5
+1 <= nums[i] <= 10^5
+1 <= k <= min(n * (n + 1) / 2, 10^9).","class Solution: 
+    MOD = 1000000007
+
+    def maximumScore(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+
+        upper = max(nums) + 1
+
+        prime = [True]*upper
+        prime[0] = prime[1] = False
+        primeScore = [0]*upper
+        for i in range(2, upper):
+            if prime[i]:
+                for j in range(i, upper, i):
+                    primeScore[j] += 1
+                    prime[j] = False
+
+        nextGreaterElement = [n]*n
+        s = []
+        for i in range(n - 1, -1, -1):
+            while s and primeScore[nums[i]] >= primeScore[nums[s[-1]]]:
+                s.pop()
+            nextGreaterElement[i] = s[-1] if s else n
+            s.append(i)
+
+        prevGreaterOrEqualElement = [-1]*n
+        s = []
+        for i in range(n):
+            while s and primeScore[nums[i]] > primeScore[nums[s[-1]]]:
+                s.pop()
+            prevGreaterOrEqualElement[i] = s[-1] if s else -1
+            s.append(i)
+
+        res = 1
+        tuples = [[nums[i], i] for i in range(n)]
+        tuples.sort(reverse=True)
+        for num, idx in tuples:
+            operations = min((idx - prevGreaterOrEqualElement[idx]) * (nextGreaterElement[idx] - idx), k)
+            res = (res * self.pow(num, operations)) % self.MOD
+            k -= operations
+            if k == 0:
+                return res
+
+        return res
+
+    def pow(self, x: int, n: int) -> int:
+        res = 1
+        while n > 0:
+            if n % 2 == 1:
+                res = (res * x) % self.MOD
+            x = (x * x) % self.MOD
+            n //= 2
+        return res","from typing import List
+import heapq
+from collections import defaultdict
+
+class Solution:
+    def maximumScore(self, nums: List[int], k: int) -> int:
+        MOD = 10**9 + 7
+        
+        # Step 1: Function to calculate the prime score of a number
+        def prime_factors_count(n):
+            factors = set()
+            # Check for number of 2s that divide n
+            while n % 2 == 0:
+                factors.add(2)
+                n //= 2
+            # n must be odd at this point so we can skip one element (i.e., we can use i = i + 2)
+            for i in range(3, int(n**0.5) + 1, 2):
+                # While i divides n, add i and divide n
+                while n % i == 0:
+                    factors.add(i)
+                    n //= i
+            # Condition if n is a prime number greater than 2
+            if n > 2:
+                factors.add(n)
+            return len(factors)
+        
+        # Step 2: Calculate prime scores for all elements in nums
+        prime_scores = [(prime_factors_count(num), i, num) for i, num in enumerate(nums)]
+        
+        # Step 3: Use a max-heap to always fetch the element with highest prime score
+        max_heap = []
+        
+        # Push all elements with their prime score into the heap
+        for score in prime_scores:
+            heapq.heappush(max_heap, (-score[0], score[1], score[2]))
+        
+        # Initialize the score
+        result = 1
+        
+        # Step 4: Multiply the score by the best choices up to k times
+        for _ in range(k):
+            if not max_heap:
+                break
+            # Get the element with the highest prime score (smallest index if tie)
+            _, _, value = heapq.heappop(max_heap)
+            result = (result * value) % MOD
+        
+        return result","class Solution:
+    def maximumScore(self, nums: List[int], k: int) -> int:
+        # Initialize an array to store the maximum prime score for each element
+        max_prime_score = [0] * len(nums)
+        
+        # Calculate the prime score for each element
+        for i in range(len(nums)):
+            num = nums[i]
+            prime_factors = set()
+            while num % 2 == 0:
+                prime_factors.add(2)
+                num //= 2
+            for j in range(3, int(num**0.5) + 1, 2):
+                while num % j == 0:
+                    prime_factors.add(j)
+                    num //= j
+            if num > 2:
+                prime_factors.add(num)
+            max_prime_score[i] = len(prime_factors)
+        
+        # Initialize left and right pointers for the subarray
+        left, right = k, k
+        score = 1
+        max_score = 0
+        
+        # Sliding window approach to find the maximum score
+        while left >= 0 and right < len(nums):
+            score *= nums[right]
+            max_score = max(max_score, score)
+            while left > 0 and max_prime_score[left - 1] >= max_prime_score[right]:
+                score //= nums[left - 1]
+                left -= 1
+            right += 1
+        
+        return max_score % (10**9 + 7)","from typing import List
+from collections import Counter
+from math import gcd
+
+class Solution:
+    def maximumScore(self, nums: List[int], k: int) -> int:
+        MOD = 10**9 + 7
+        
+        def prime_factors(n):
+            factors = Counter()
+            for i in range(2, int(n**0.5) + 1):
+                while n % i == 0:
+                    factors[i] += 1
+                    n //= i
+            if n > 1:
+                factors[n] += 1
+            return factors
+        
+        def prime_score(n):
+            return len(prime_factors(n))
+        
+        n = len(nums)
+        max_score = 1
+        
+        for _ in range(k):
+            curr_max_score = 0
+            start, end = 0, 0
+            
+            while end < n:
+                while end < n:
+                    score = prime_score(nums[end])
+                    if score > curr_max_score:
+                        curr_max_score = score
+                        start, end = end, end
+                    end += 1
+                
+                max_score = (max_score * nums[start]) % MOD
+                start += 1
+        
+        return max_score","from typing import List
+
+MOD = 10**9 + 7
+
+
+def is_prime(num):
+    if num <= 1:
+        return False
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+
+def get_prime_factors(num):
+    factors = set()
+    while num > 1:
+        if is_prime(num):
+            factors.add(num)
+            break
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                factors.add(i)
+                num //= i
+                break
+    return factors
+
+
+class Solution:
+    def maximumScore(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+        left, right, score = 0, 0, 1
+        max_factors = set()
+
+        for right in range(n):
+            current_factors = get_prime_factors(nums[right])
+            max_factors |= current_factors
+
+            # Slide window if k operations are used
+            while right - left + 1 > k:
+                removed_factors = get_prime_factors(nums[left])
+                max_factors -= removed_factors
+                left += 1
+
+            # Update score with the element having the most prime factors
+            score = (score * max(max_factors)) % MOD
+
+        return score",hard
+11,"Solve the following problem with python3 code. Class name: Solution, Method name: def findMaximumElegance(self, items: List[List[int]], k: int) -> int:.
+
+You are given a 0-indexed 2D integer array items of length n and an integer k.
+
+items[i] = [profit_i, category_i], where profit_i and category_i denote the profit and category of the i^th item respectively.
+
+Let's define the elegance of a subsequence of items as total_profit + distinct_categories^2, where total_profit is the sum of all profits in the subsequence, and distinct_categories is the number of distinct categories from all the categories in the selected subsequence.
+
+Your task is to find the maximum elegance from all subsequences of size k in items.
+
+Return an integer denoting the maximum elegance of a subsequence of items with size exactly k.
+
+Note: A subsequence of an array is a new array generated from the original array by deleting some elements (possibly none) without changing the remaining elements' relative order.
+
+Example 1:
+
+Input: items = [[3,2],[5,1],[10,1]], k = 2
+Output: 17
+Explanation: In this example, we have to select a subsequence of size 2.
+We can select items[0] = [3,2] and items[2] = [10,1].
+The total profit in this subsequence is 3 + 10 = 13, and the subsequence contains 2 distinct categories [2,1].
+Hence, the elegance is 13 + 2^2 = 17, and we can show that it is the maximum achievable elegance. 
+
+Example 2:
+
+Input: items = [[3,1],[3,1],[2,2],[5,3]], k = 3
+Output: 19
+Explanation: In this example, we have to select a subsequence of size 3. 
+We can select items[0] = [3,1], items[2] = [2,2], and items[3] = [5,3]. 
+The total profit in this subsequence is 3 + 2 + 5 = 10, and the subsequence contains 3 distinct categories [1,2,3]. 
+Hence, the elegance is 10 + 3^2 = 19, and we can show that it is the maximum achievable elegance.
+
+Example 3:
+
+Input: items = [[1,1],[2,1],[3,1]], k = 3
+Output: 7
+Explanation: In this example, we have to select a subsequence of size 3. 
+We should select all the items. 
+The total profit will be 1 + 2 + 3 = 6, and the subsequence contains 1 distinct category [1]. 
+Hence, the maximum elegance is 6 + 1^2 = 7.  
+ 
+Constraints:
+
+1 <= items.length == n <= 10^5
+items[i].length == 2
+items[i][0] == profit_i
+items[i][1] == category_i
+1 <= profit_i <= 10^9
+1 <= category_i <= n 
+1 <= k <= n","class Solution:
+    def findMaximumElegance(self, items: List[List[int]], k: int) -> int:
+        items = sorted(items, key=lambda v: -v[0])
+        res = cur = 0
+        A = []
+        seen = set()
+        for i, (p, c) in enumerate(items):
+            if i < k:
+                if c in seen:
+                    A.append(p)
+                cur += p
+            elif c not in seen:
+                if not A: break
+                cur += p - A.pop()
+            seen.add(c)
+            res = max(res, cur + len(seen) * len(seen))
+        return res","from typing import List
+import heapq
+
+class Solution:
+    def findMaximumElegance(self, items: List[List[int]], k: int) -> int:
+        # Sort items by profit in descending order
+        items.sort(reverse=True, key=lambda x: x[0])
+        
+        max_elegance = 0
+        current_profit = 0
+        category_set = set()
+        min_heap = []
+        
+        for i in range(len(items)):
+            profit, category = items[i]
+            
+            if len(min_heap) < k:
+                # Add item to the current selection
+                heapq.heappush(min_heap, (profit, category))
+                current_profit += profit
+                category_set.add(category)
+            else:
+                # Check if we can replace an item in the min_heap to get more distinct categories
+                if (profit, category) > min_heap[0]:
+                    current_profit -= heapq.heappop(min_heap)[0]
+                    heapq.heappush(min_heap, (profit, category))
+                    current_profit += profit
+                category_set.add(category)
+            
+            if len(min_heap) == k:
+                # Calculate elegance
+                elegance = current_profit + len(category_set) ** 2
+                max_elegance = max(max_elegance, elegance)
+        
+        return max_elegance","from typing import List
+
+class Solution:
+    def findMaximumElegance(self, items: List[List[int]], k: int) -> int:
+        # Sort the items by profit in descending order
+        items.sort(key=lambda x: x[0], reverse=True)
+        
+        # Initialize a set to keep track of distinct categories
+        distinct_categories = set()
+        
+        # Initialize the total profit and maximum elegance
+        total_profit = 0
+        max_elegance = 0
+        
+        # Iterate through the sorted items
+        for profit, category in items:
+            total_profit += profit
+            distinct_categories.add(category)
+            
+            # If the size of distinct_categories exceeds k, remove the smallest profit item
+            while len(distinct_categories) > k:
+                smallest_profit, smallest_category = items.pop()
+                total_profit -= smallest_profit
+                distinct_categories.remove(smallest_category)
+            
+            # Update the maximum elegance
+            max_elegance = max(max_elegance, total_profit + len(distinct_categories) ** 2)
+        
+        return max_elegance
+
+# Example usage
+solution = Solution()
+items1 = [[3, 2], [5, 1], [10, 1]]
+k1 = 2
+print(solution.findMaximumElegance(items1, k1))  # Output: 17
+
+items2 = [[3, 1], [3, 1], [2, 2], [5, 3]]
+k2 = 3
+print(solution.findMaximumElegance(items2, k2))  # Output: 19
+
+items3 = [[1, 1], [2, 1], [3, 1]]
+k3 = 3
+print(solution.findMaximumElegance(items3, k3))  # Output: 7","from collections import defaultdict
+
+class Solution:
+    def findMaximumElegance(self, items: List[List[int]], k: int) -> int:
+        n = len(items)
+        
+        # Sort items by profit in descending order
+        items.sort(key=lambda x: x[0], reverse=True)
+        
+        # Precompute prefix sum of profits
+        prefix_sum = [0] * (n + 1)
+        for i in range(n):
+            prefix_sum[i + 1] = prefix_sum[i] + items[i][0]
+        
+        # dp[i][j] stores the maximum elegance for the first i items using j distinct categories
+        dp = [[0] * (k + 1) for _ in range(n + 1)]
+        
+        # Iterate over items and distinct categories
+        for i in range(1, n + 1):
+            for j in range(1, min(i, k) + 1):
+                # Skip the current item
+                dp[i][j] = dp[i - 1][j]
+                
+                # Include the current item
+                if j == 1 or items[i - 1][1] != items[i - 2][1]:
+                    dp[i][j] = max(dp[i][j], dp[i - 1][j - 1] + prefix_sum[i] - prefix_sum[i - j] + j ** 2)
+        
+        return dp[n][k]","from collections import defaultdict
+
+class Solution:
+    def findMaximumElegance(self, items: List[List[int]], k: int) -> int:
+        # Create a dictionary to store profit and category counts for each category seen so far
+        category_counts = defaultdict(int)
+        max_elegance = 0
+
+        # Loop through each item
+        for profit, category in items:
+            # Update category count
+            category_counts[category] += 1
+
+            # If subsequence size is reached, calculate elegance and update max_elegance
+            if len(category_counts) == k:
+                total_profit = sum(profit for profit, _ in category_counts.items())
+                distinct_categories = len(category_counts)
+                max_elegance = max(max_elegance, total_profit + distinct_categories**2)
+
+            # If the window size is larger than k, remove the least frequent category
+            if len(category_counts) > k:
+                # Find the category with the least count
+                least_frequent_category = min(category_counts, key=category_counts.get)
+                # Decrement the count of the least frequent category
+                category_counts[least_frequent_category] -= 1
+                # If the count becomes zero, remove the category from the dictionary
+                if category_counts[least_frequent_category] == 0:
+                    del category_counts[least_frequent_category]
+
+        return max_elegance",hard
+12,"Solve the following problem with python3 code. Class name: Solution, Method name: def topPoints(self, nums: List[int], k: int) -> int:.
+
+You are given an array nums of n positive integers and an integer k.
+
+Initially, you start with a score of 1. You have to maximize your score by applying the following operation at most k times:
+
+Choose any non-empty subarray nums[l, ..., r] that you haven't chosen previously.
+Choose an element x of nums[l, ..., r] with the highest prime score. If multiple such elements exist, choose the one with the smallest index.
+Multiply your score by x.
+Here, nums[l, ..., r] denotes the subarray of nums starting at index l and ending at the index r, both ends being inclusive.
+
+The prime score of an integer x is equal to the number of distinct prime factors of x. For example, the prime score of 300 is 3 since 300 = 2 * 2 * 3 * 5 * 5.
+
+Return the maximum possible score after applying at most k operations.
+
+Since the answer may be large, return it modulo 10^9 + 7.
+
+Example 1:
+
+Input: nums = [8,3,9,3,8], k = 2
+Output: 81
+Explanation: To get a score of 81, we can apply the following operations:
+- Choose subarray nums[2, ..., 2]. nums[2] is the only element in this subarray. Hence, we multiply the score by nums[2]. The score becomes 1 * 9 = 9.
+- Choose subarray nums[2, ..., 3]. Both nums[2] and nums[3] have a prime score of 1, but nums[2] has the smaller index. Hence, we multiply the score by nums[2]. The score becomes 9 * 9 = 81.
+It can be proven that 81 is the highest score one can obtain.
+
+Example 2:
+
+Input: nums = [19,12,14,6,10,18], k = 3
+Output: 4788
+Explanation: To get a score of 4788, we can apply the following operations: 
+- Choose subarray nums[0, ..., 0]. nums[0] is the only element in this subarray. Hence, we multiply the score by nums[0]. The score becomes 1 * 19 = 19.
+- Choose subarray nums[5, ..., 5]. nums[5] is the only element in this subarray. Hence, we multiply the score by nums[5]. The score becomes 19 * 18 = 342.
+- Choose subarray nums[2, ..., 3]. Both nums[2] and nums[3] have a prime score of 2, but nums[2] has the smaller index. Hence, we multipy the score by nums[2]. The score becomes 342 * 14 = 4788.
+It can be proven that 4788 is the highest score one can obtain.
+ 
+Constraints:
+
+1 <= nums.length == n <= 10^5
+1 <= nums[i] <= 10^5
+1 <= k <= min(n * (n + 1) / 2, 10^9).","class Solution: 
+    MOD = 1000000007
+
+    def topPoints(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+
+        upper = max(nums) + 1
+
+        prime = [True]*upper
+        prime[0] = prime[1] = False
+        primeScore = [0]*upper
+        for i in range(2, upper):
+            if prime[i]:
+                for j in range(i, upper, i):
+                    primeScore[j] += 1
+                    prime[j] = False
+
+        nextGreaterElement = [n]*n
+        s = []
+        for i in range(n - 1, -1, -1):
+            while s and primeScore[nums[i]] >= primeScore[nums[s[-1]]]:
+                s.pop()
+            nextGreaterElement[i] = s[-1] if s else n
+            s.append(i)
+
+        prevGreaterOrEqualElement = [-1]*n
+        s = []
+        for i in range(n):
+            while s and primeScore[nums[i]] > primeScore[nums[s[-1]]]:
+                s.pop()
+            prevGreaterOrEqualElement[i] = s[-1] if s else -1
+            s.append(i)
+
+        res = 1
+        tuples = [[nums[i], i] for i in range(n)]
+        tuples.sort(reverse=True)
+        for num, idx in tuples:
+            operations = min((idx - prevGreaterOrEqualElement[idx]) * (nextGreaterElement[idx] - idx), k)
+            res = (res * self.pow(num, operations)) % self.MOD
+            k -= operations
+            if k == 0:
+                return res
+
+        return res
+
+    def pow(self, x: int, n: int) -> int:
+        res = 1
+        while n > 0:
+            if n % 2 == 1:
+                res = (res * x) % self.MOD
+            x = (x * x) % self.MOD
+            n //= 2
+        return res","from typing import List
+import heapq
+
+MOD = 10**9 + 7
+
+class Solution:
+    def primeFactors(self, n: int) -> int:
+        factors = set()
+        d = 2
+        while d * d <= n:
+            while (n % d) == 0:
+                factors.add(d)
+                n //= d
+            d += 1
+        if n > 1:
+            factors.add(n)
+        return len(factors)
+    
+    def topPoints(self, nums: List[int], k: int) -> int:
+        # Calculate prime scores for all numbers
+        max_num = max(nums)
+        prime_scores = [0] * (max_num + 1)
+        
+        for i in range(2, max_num + 1):
+            if prime_scores[i] == 0:  # i is a prime
+                for multiple in range(i, max_num + 1, i):
+                    prime_scores[multiple] += 1
+        
+        # Use max-heap to store subarrays based on prime scores
+        heap = []
+        for i, num in enumerate(nums):
+            heapq.heappush(heap, (-prime_scores[num], -i, num))
+        
+        score = 1
+        used = set()
+        
+        while k > 0 and heap:
+            _, neg_index, num = heapq.heappop(heap)
+            index = -neg_index
+            
+            if index in used:
+                continue
+            
+            score = (score * num) % MOD
+            k -= 1
+            
+            # Mark all elements in the chosen subarray as used
+            used.add(index)
+        
+        return score
+
+# Example usage:
+sol = Solution()
+print(sol.maximumScore([8,3,9,3,8], 2))  # Output: 81
+print(sol.maximumScore([19,12,14,6,10,18], 3))  # Output: 4788","class Solution:
+    def topPoints(self, nums: List[int], k: int) -> int:
+        # Initialize an array to store the maximum prime score for each element
+        max_prime_scores = [0] * len(nums)
+        
+        # Calculate the maximum prime score for each element
+        for i in range(len(nums)):
+            num = nums[i]
+            max_prime_scores[i] = self.calculate_prime_score(num)
+        
+        # Initialize a stack to store indices of elements in non-decreasing order
+        stack = []
+        left = [0] * len(nums)
+        
+        # Find the left boundary for each element
+        for i in range(len(nums)):
+            while stack and nums[stack[-1]] >= nums[i]:
+                stack.pop()
+            left[i] = stack[-1] if stack else -1
+            stack.append(i)
+        
+        # Clear the stack for the right boundary
+        stack.clear()
+        right = [0] * len(nums)
+        
+        # Find the right boundary for each element
+        for i in range(len(nums) - 1, -1, -1):
+            while stack and nums[stack[-1]] >= nums[i]:
+                stack.pop()
+            right[i] = stack[-1] if stack else len(nums)
+            stack.append(i)
+        
+        # Initialize the answer
+        ans = 0
+        MOD = 10**9 + 7
+        
+        # Calculate the score for each subarray
+        for i in range(len(nums)):
+            l = left[i] + 1
+            r = right[i] - 1
+            num = nums[i]
+            prime_score = max_prime_scores[i]
+            length = r - l + 1
+            ans = (ans + pow(num, prime_score, MOD) * pow(num, length, MOD)) % MOD
+        
+        return ans
+    
+    def calculate_prime_score(self, num: int) -> int:
+        # Calculate the prime score for a given number
+        score = 0
+        for i in range(2, int(num**0.5) + 1):
+            while num % i == 0:
+                score += 1
+                num //= i
+        if num > 1:
+            score += 1
+        return score","from math import sqrt
+from typing import List
+
+class Solution:
+    def topPoints(self, nums: List[int], k: int) -> int:
+        MOD = 10**9 + 7
+        n = len(nums)
+        prime_scores = [0] * (n + 1)
+        
+        # Precompute prime scores
+        for i in range(1, n + 1):
+            prime_scores[i] = self.get_prime_score(nums[i - 1])
+        
+        # Create prefix sum array
+        prefix_sum = [0] * (n + 1)
+        for i in range(1, n + 1):
+            prefix_sum[i] = (prefix_sum[i - 1] + prime_scores[i]) % MOD
+        
+        max_score = 1
+        for _ in range(k):
+            best_score = 0
+            best_index = -1
+            
+            # Find the subarray with the highest prime score
+            for i in range(n):
+                left = i + 1
+                right = n
+                while left <= right:
+                    mid = (left + right) // 2
+                    score = (prefix_sum[mid] - prefix_sum[i]) % MOD
+                    if score >= best_score:
+                        best_score = score
+                        best_index = mid
+                    else:
+                        right = mid - 1
+            
+            # Multiply the current score with the highest prime score
+            max_score = (max_score * nums[best_index - 1]) % MOD
+            
+            # Update the prefix sum array to exclude the chosen subarray
+            for i in range(best_index, n + 1):
+                prefix_sum[i] = (prefix_sum[i] - prime_scores[best_index]) % MOD
+        
+        return max_score
+    
+    def get_prime_score(self, x: int) -> int:
+        prime_score = 1
+        sqrt_x = int(sqrt(x))
+        prime_factors = set()
+        
+        for i in range(2, sqrt_x + 1):
+            if x % i == 0:
+                prime_factors.add(i)
+                while x % i == 0:
+                    x //= i
+        
+        if x > 1:
+            prime_factors.add(x)
+        
+        return len(prime_factors)","from typing import List
+
+MOD = 10**9 + 7
+
+
+def is_prime(n):
+    """"""
+    Checks if a number is prime using a simple loop.
+    """"""
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+
+def precompute_prime_factors(nums):
+    """"""
+    Precomputes the prime factors for each number in nums.
+    """"""
+    factors = [[] for _ in range(len(nums))]
+    for i, num in enumerate(nums):
+        j = 2
+        while j * j <= num:
+            if num % j == 0:
+                factors[i].append(j)
+                if num // j != j:
+                    factors[i].append(num // j)
+            j += 1
+    return factors
+
+
+class Solution:
+    def topPoints(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+        factors = precompute_prime_factors(nums)
+
+        # Initialize variables for sliding window
+        left, right, score, max_score = 0, 0, 1, 0
+        unique_primes = set()
+
+        while right < n:
+            # Add current element's prime factors to the set
+            for factor in factors[right]:
+                unique_primes.add(factor)
+
+            # Update score with the element with the highest prime factor count
+            score = (score * nums[right]) % MOD if len(unique_primes) > max_score else score
+
+            # Update max_score
+            max_score = max(max_score, len(unique_primes))
+
+            # Slide the window if k operations are used or right reaches the end
+            if right - left + 1 > k or right == n - 1:
+                # Remove prime factors from the set when element is removed from window
+                for factor in factors[left]:
+                    unique_primes.remove(factor)
+                left += 1
+
+            right += 1
+
+        return max_score % MOD",hard
+24,"Solve the following problem with python3 code. Class name: Solution, Method name: def minAbsoluteDifference(self, nums: List[int], x: int) -> int:.
+
+You are given a 0-indexed integer array nums and an integer x.
+
+Find the minimum absolute difference between two elements in the array that are at least x indices apart.
+
+In other words, find two indices i and j such that abs(i - j) >= x and abs(nums[i] - nums[j]) is minimized.
+
+Return an integer denoting the minimum absolute difference between two elements that are at least x indices apart.
+
+Example 1:
+
+Input: nums = [4,3,2,4], x = 2
+Output: 0
+Explanation: We can select nums[0] = 4 and nums[3] = 4. 
+They are at least 2 indices apart, and their absolute difference is the minimum, 0. 
+It can be shown that 0 is the optimal answer.
+
+Example 2:
+
+Input: nums = [5,3,2,10,15], x = 1
+Output: 1
+Explanation: We can select nums[1] = 3 and nums[2] = 2.
+They are at least 1 index apart, and their absolute difference is the minimum, 1.
+It can be shown that 1 is the optimal answer.
+
+Example 3:
+
+Input: nums = [1,2,3,4], x = 3
+Output: 3
+Explanation: We can select nums[0] = 1 and nums[3] = 4.
+They are at least 3 indices apart, and their absolute difference is the minimum, 3.
+It can be shown that 3 is the optimal answer.
+ 
+Constraints:
+
+1 <= nums.length <= 10^5
+1 <= nums[i] <= 10^9
+0 <= x < nums.length","class Solution:
+  def minAbsoluteDifference(self, nums: List[int], x: int) -> int:
+    if x == 0:
+      return 0
+
+    arr, best_dist = SortedList([]), float('inf')
+    for i in range(x, len(nums)):
+      arr.add(nums[i - x])
+      v = nums[i]
+
+      pos = arr.bisect_left(v)
+      if pos < len(arr):
+        best_dist = min(best_dist, abs(arr[pos] - v))
+      if pos > 0:
+        best_dist = min(best_dist, abs(arr[pos - 1] - v))
+    
+    return best_dist","from bisect import bisect_left, insort
+from typing import List
+
+class Solution:
+    def minAbsoluteDifference(self, nums: List[int], x: int) -> int:
+        if x == 0:
+            return 0  # No valid pair can be found if x is 0 based on the problem constraints
+
+        sorted_list = []
+        min_diff = float('inf')
+
+        for i in range(len(nums)):
+            if i >= x:
+                # Insert nums[i - x] into sorted_list to maintain the sliding window
+                insort(sorted_list, nums[i - x])
+
+            # Use binary search to find the closest elements in the sorted list
+            if sorted_list:
+                pos = bisect_left(sorted_list, nums[i])
+                
+                if pos < len(sorted_list):
+                    min_diff = min(min_diff, abs(nums[i] - sorted_list[pos]))
+                
+                if pos > 0:
+                    min_diff = min(min_diff, abs(nums[i] - sorted_list[pos - 1]))
+        
+        return min_diff
+
+# Example usage:
+# solution = Solution()
+# print(solution.minAbsoluteDifference([4,3,2,4], 2))  # Output: 0
+# print(solution.minAbsoluteDifference([5,3,2,10,15], 1))  # Output: 1
+# print(solution.minAbsoluteDifference([1,2,3,4], 3))  # Output: 3","from typing import List
+
+class Solution:
+    def minAbsoluteDifference(self, nums: List[int], x: int) -> int:
+        # Sort the array to make it easier to find the minimum difference
+        nums.sort()
+        
+        # Initialize the minimum difference
+        min_diff = float('inf')
+        
+        # Iterate through the array
+        for i in range(len(nums)):
+            # Find the index j such that abs(i - j) >= x
+            j = i + x
+            if j < len(nums):
+                # Calculate the absolute difference
+                diff = abs(nums[i] - nums[j])
+                # Update the minimum difference if necessary
+                min_diff = min(min_diff, diff)
+        
+        return min_diff
+
+# Example usage
+solution = Solution()
+nums1 = [4, 3, 2, 4]
+x1 = 2
+print(solution.minAbsoluteDifference(nums1, x1))  # Output: 0
+
+nums2 = [5, 3, 2, 10, 15]
+x2 = 1
+print(solution.minAbsoluteDifference(nums2, x2))  # Output: 1
+
+nums3 = [1, 2, 3, 4]
+x3 = 3
+print(solution.minAbsoluteDifference(nums3, x3))  # Output: 3","from typing import List
+
+class Solution:
+    def minAbsoluteDifference(self, nums: List[int], x: int) -> int:
+        nums.sort()  # Sort the array
+        n = len(nums)
+        min_diff = float('inf')  # Initialize min_diff with infinity
+
+        for i in range(n - x):
+            min_diff = min(min_diff, nums[i + x] - nums[i])
+
+        return min_diff","class Solution:
+    def minAbsoluteDifference(self, nums: List[int], x: int) -> int:
+        min_diff = float('inf')
+        # Use a dictionary to store the last seen index for each element
+        last_seen = {}
+        for i, num in enumerate(nums):
+            # If the element is already seen, update min_diff considering the previous index
+            if num in last_seen:
+                min_diff = min(min_diff, abs(i - last_seen[num]))
+            last_seen[num] = i  # Update the last seen index for the current element
+        
+        # Handle the case where no difference is found (all elements are the same)
+        return min_diff if min_diff != float('inf') else -1",medium
+25,"Solve the following problem with python3 code. Class name: Solution, Method name: def multi2(self, head: Optional[ListNode]) -> Optional[ListNode]:.
+
+You are given the head of a non-empty linked list representing a non-negative integer without leading zeroes.
+
+Return the head of the linked list after doubling it.
+
+Example 1:
+
+Input: head = [1,8,9]
+Output: [3,7,8]
+Explanation: The figure above corresponds to the given linked list which represents the number 189. Hence, the returned linked list represents the number 189 * 2 = 378.
+
+Example 2:
+
+Input: head = [9,9,9]
+Output: [1,9,9,8]
+Explanation: The figure above corresponds to the given linked list which represents the number 999. Hence, the returned linked list reprersents the number 999 * 2 = 1998. 
+
+Constraints:
+
+The number of nodes in the list is in the range [1, 10^4]
+0 <= Node.val <= 9
+The input is generated such that the list represents a number that does not have leading zeros, except the number 0 itself.","class Solution:
+    def multi2(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head.val > 4:
+            head = ListNode(0, head)
+        node = head
+        while node:
+            node.val = (node.val * 2) % 10
+            if node.next and node.next.val > 4:
+                node.val += 1
+            node = node.next
+        return head","from typing import Optional
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+    def multi2(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        # Convert linked list to integer
+        num = 0
+        current = head
+        while current:
+            num = num * 10 + current.val
+            current = current.next
+        
+        # Double the number
+        num *= 2
+        
+        # Convert integer back to linked list
+        # Special case for 0
+        if num == 0:
+            return ListNode(0)
+        
+        # Create the new linked list
+        dummy_head = ListNode(0)
+        current = dummy_head
+        for digit in str(num):
+            current.next = ListNode(int(digit))
+            current = current.next
+        
+        return dummy_head.next                                                    def list_to_linked_list(lst):
+    dummy_head = ListNode(0)
+    current = dummy_head
+    for number in lst:
+        current.next = ListNode(number)
+        current = current.next
+    return dummy_head.next
+
+def linked_list_to_list(head):
+    lst = []
+    current = head
+    while current:
+        lst.append(current.val)
+        current = current.next
+    return lst
+
+# Test cases
+s = Solution()
+
+# Example 1
+head = list_to_linked_list([1, 8, 9])
+result = s.doubleIt(head)
+print(linked_list_to_list(result))  # Output: [3, 7, 8]
+
+# Example 2
+head = list_to_linked_list([9, 9, 9])
+result = s.doubleIt(head)
+print(linked_list_to_list(result))  # Output: [1, 9, 9, 8]","# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+from typing import List
+
+class Solution:
+    def multi2(self, head: List[ListNode]) -> List[ListNode]:
+        # Convert linked list to integer
+        num = 0
+        current = head
+        while current:
+            num = num * 10 + current.val
+            current = current.next
+        
+        # Double the number
+        doubled_num = num * 2
+        
+        # Convert back to linked list
+        prev_node = None
+        for digit in str(doubled_num)[::-1]:
+            node = ListNode(int(digit), prev_node)
+            prev_node = node
+            
+        return prev_node
+
+# Helper function to create linked lists from integers (for testing)
+def create_linked_list(number):
+    head, tail = None, None
+    
+    for digit in str(number):
+        if not head:
+            head = tail = ListNode(int(digit))
+        else:
+            tail.next = ListNode(int(digit))
+            tail = tail.next
+            
+    return head
+
+# Test cases
+solution_instance = Solution()
+
+# Example 1 test case: Input: [1,8,9], Output: [3,7,8]
+head1_input_test_case_1 = create_linked_list(189)
+head_output_test_case_1 = solution_instance.doubleIt(head1_input_test_case_1)
+
+current = head_output_test_case_1
+while current:
+    print(current.val, end='')
+    current = current.next
+print()  # Expected output: 378
+
+# Example 2 test case: Input: [9,9,9], Output: [1,9,9,8]
+head2_input_test_case_2 = create_linked_list(999)
+head_output_test_case_2 = solution_instance.doubleIt(head2_input_test_case_2)
+
+current = head_output_test_case_2
+while current:
+    print(current.val, end='')
+    current = current.next
+print()  # Expected output: 1998","from typing import Optional
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+    def multi2(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        # Convert linked list to number
+        num = 0
+        curr = head
+        while curr:
+            num = num * 10 + curr.val
+            curr = curr.next
+
+        # Double the number
+        num *= 2
+
+        # Create a new linked list from the doubled number
+        dummy = ListNode()
+        curr = dummy
+        while num > 0:
+            digit = num % 10
+            curr.next = ListNode(digit)
+            curr = curr.next
+            num //= 10
+
+        return dummy.next
+
+# Example 1
+head = ListNode(1)
+head.next = ListNode(8)
+head.next.next = ListNode(9)
+
+solution = Solution()
+new_head = solution.doubleIt(head)
+
+# Print the new linked list
+curr = new_head
+while curr:
+    print(curr.val, end="" "")
+    curr = curr.next
+# Output: 3 7 8
+
+# Example 2
+head = ListNode(9)
+head.next = ListNode(9)
+head.next.next = ListNode(9)
+
+solution = Solution()
+new_head = solution.doubleIt(head)
+
+# Print the new linked list
+curr = new_head
+while curr:
+    print(curr.val, end="" "")
+    curr = curr.next
+# Output: 1 9 9 8","class ListNode:
+  def __init__(self, val=0, next=None):
+    self.val = val
+    self.next = next
+
+class Solution:
+  def multi2(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    """"""
+    Doubles the value represented by the linked list.
+
+    Args:
+      head: The head of the linked list representing a non-negative integer.
+
+    Returns:
+      The head of the linked list representing the doubled value.
+    """"""
+
+    dummy = ListNode(0)  # Create a dummy node to handle leading carry
+    dummy.next = head
+    prev, curr = dummy, head
+    carry = 0
+
+    while curr:
+      # Double the current digit and add carry
+      new_val = curr.val * 2 + carry
+      curr.val = new_val % 10
+      carry = new_val // 10
+
+      # Move pointers
+      prev = curr
+      curr = curr.next
+
+    # Add a new node for the leading carry if needed
+    if carry:
+      prev.next = ListNode(carry)
+
+    return dummy.next  # Return head without the dummy node",medium
+26,"Solve the following problem with python3 code. Class name: Solution, Method name: def minimumAbsoluteVariance(self, nums: List[int], x: int) -> int:.
+
+You are given a 0-indexed integer array nums and an integer x.
+
+Find the minimum Absolute Variance between two elements in the array that are at least x indices apart.
+
+In other words, find two indices i and j such that abs(i - j) >= x and abs(nums[i] - nums[j]) is minimized.
+
+Return an integer denoting the minimum absolute difference between two elements that are at least x indices apart.
+
+Example 1:
+
+Input: nums = [4,3,2,4], x = 2
+Output: 0
+Explanation: We can select nums[0] = 4 and nums[3] = 4. 
+They are at least 2 indices apart, and their absolute difference is the minimum, 0. 
+It can be shown that 0 is the optimal answer.
+
+Example 2:
+
+Input: nums = [5,3,2,10,15], x = 1
+Output: 1
+Explanation: We can select nums[1] = 3 and nums[2] = 2.
+They are at least 1 index apart, and their absolute difference is the minimum, 1.
+It can be shown that 1 is the optimal answer.
+
+Example 3:
+
+Input: nums = [1,2,3,4], x = 3
+Output: 3
+Explanation: We can select nums[0] = 1 and nums[3] = 4.
+They are at least 3 indices apart, and their absolute difference is the minimum, 3.
+It can be shown that 3 is the optimal answer.
+ 
+Constraints:
+
+1 <= nums.length <= 10^5
+1 <= nums[i] <= 10^9
+0 <= x < nums.length","class Solution:
+  def minimumAbsoluteVariance(self, nums: List[int], x: int) -> int:
+    if x == 0:
+      return 0
+
+    arr, best_dist = SortedList([]), float('inf')
+    for i in range(x, len(nums)):
+      arr.add(nums[i - x])
+      v = nums[i]
+
+      pos = arr.bisect_left(v)
+      if pos < len(arr):
+        best_dist = min(best_dist, abs(arr[pos] - v))
+      if pos > 0:
+        best_dist = min(best_dist, abs(arr[pos - 1] - v))
+    
+    return best_dist","from typing import List
+from sortedcontainers import SortedList
+
+class Solution:
+    def minimumAbsoluteVariance(self, nums: List[int], x: int) -> int:
+        if x == 0:
+            return 0
+
+        sorted_list = SortedList()
+        min_diff = float('inf')
+
+        for i in range(x, len(nums)):
+            sorted_list.add(nums[i - x])
+            current_val = nums[i]
+
+            pos = sorted_list.bisect_left(current_val)
+            if pos > 0:
+                min_diff = min(min_diff, abs(current_val - sorted_list[pos - 1]))
+            if pos < len(sorted_list):
+                min_diff = min(min_diff, abs(current_val - sorted_list[pos]))
+        
+        return min_diff
+
+# Example usage:
+sol = Solution()
+print(sol.minAbsoluteDifference([4, 3, 2, 4], 2))  # Output: 0
+print(sol.minAbsoluteDifference([5, 3, 2, 10, 15], 1))  # Output: 1
+print(sol.minAbsoluteDifference([1, 2, 3, 4], 3))  # Output: 3","from typing import List
+
+class Solution:
+    def minimumAbsoluteVariance(self, nums: List[int], x: int) -> int:
+        # Sort the array to make it easier to find the minimum absolute difference
+        nums.sort()
+        n = len(nums)
+        min_diff = float('inf')  # Initialize with positive infinity
+        
+        # Iterate through the array
+        for i in range(n):
+            # Find the rightmost index j such that abs(i - j) >= x
+            j = i + x
+            if j < n:
+                # Calculate the absolute difference between nums[i] and nums[j]
+                diff = abs(nums[i] - nums[j])
+                min_diff = min(min_diff, diff)  # Update the minimum difference
+        
+        return min_diff","class Solution:
+    def minimumAbsoluteVariance(self, nums: List[int], x: int) -> int:
+        nums.sort()  # Sort the array
+        n = len(nums)
+        min_diff = float('inf')
+
+        # Check for adjacent elements
+        for i in range(n - 1):
+            min_diff = min(min_diff, abs(nums[i] - nums[i + 1]))
+
+        # Check for elements at least x indices apart
+        i, j = 0, x
+        while j < n:
+            min_diff = min(min_diff, abs(nums[i] - nums[j]))
+            i += 1
+            j += 1
+
+        return min_diff","class Solution:
+    def minimumAbsoluteVariance(self, nums: List[int], x: int) -> int:
+        min_diff = float('inf')
+        # Use a dictionary to store the last seen index for each element
+        last_seen = {}
+        for i, num in enumerate(nums):
+            # If the element is already seen, update min_diff considering the previous index
+            if num in last_seen:
+                min_diff = min(min_diff, abs(i - last_seen[num]))
+            last_seen[num] = i  # Update the last seen index for the current element
+        
+        # Handle the case where no difference is found (all elements are unique)
+        return min_diff if min_diff != float('inf') else -1",medium
+27,"Solve the following problem with python3 code. Class name: Solution, Method name: def doubleIt(self, head: Optional[ListNode]) -> Optional[ListNode]:.
+
+You are given the head of a non-empty linked list representing a non-negative integer without leading zeroes.
+
+Return the head of the linked list after doubling it.
+
+Example 1:
+
+Input: head = [1,8,9]
+Output: [3,7,8]
+Explanation: The figure above corresponds to the given linked list which represents the number 189. Hence, the returned linked list represents the number 189 * 2 = 378.
+
+Example 2:
+
+Input: head = [9,9,9]
+Output: [1,9,9,8]
+Explanation: The figure above corresponds to the given linked list which represents the number 999. Hence, the returned linked list reprersents the number 999 * 2 = 1998. 
+
+Constraints:
+
+The number of nodes in the list is in the range [1, 10^4]
+0 <= Node.val <= 9
+The input is generated such that the list represents a number that does not have leading zeros, except the number 0 itself.","class Solution:
+    def doubleIt(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head.val > 4:
+            head = ListNode(0, head)
+        node = head
+        while node:
+            node.val = (node.val * 2) % 10
+            if node.next and node.next.val > 4:
+                node.val += 1
+            node = node.next
+        return head","from typing import Optional
+
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+    def doubleIt(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head is None:
+            return None
+
+        # Helper function to reverse a linked list
+        def reverseLinkedList(head: Optional[ListNode]) -> Optional[ListNode]:
+            prev = None
+            current = head
+            while current:
+                next_node = current.next
+                current.next = prev
+                prev = current
+                current = next_node
+            return prev
+
+        # Reverse the input linked list
+        reversed_head = reverseLinkedList(head)
+
+        # Double the number represented by the reversed linked list
+        current = reversed_head
+        carry = 0
+
+        while current:
+            doubled_value = current.val * 2 + carry
+            carry = doubled_value // 10
+            current.val = doubled_value % 10
+            if current.next is None and carry:
+                current.next = ListNode(carry)
+                carry = 0
+            current = current.next
+
+        # Reverse the list back to original order
+        return reverseLinkedList(reversed_head)
+
+# Helper function to create a linked list from a list of digits
+def create_linked_list(digits):
+    if not digits:
+        return None
+    head = ListNode(digits[0])
+    current = head
+    for digit in digits[1:]:
+        current.next = ListNode(digit)
+        current = current.next
+    return head
+
+# Helper function to print a linked list
+def print_linked_list(head):
+    current = head
+    while current:
+        print(current.val, end="" -> "" if current.next else """")
+        current = current.next
+    print()
+
+# Example 1
+input_list_1 = [1, 8, 9]
+head1 = create_linked_list(input_list_1)
+solution = Solution()
+result1 = solution.doubleIt(head1)
+print(""Output for input [1, 8, 9]:"")
+print_linked_list(result1)  # Expected output: [3, 7, 8]
+
+# Example 2
+input_list_2 = [9, 9, 9]
+head2 = create_linked_list(input_list_2)
+result2 = solution.doubleIt(head2)
+print(""Output for input [9, 9, 9]:"")
+print_linked_list(result2)  # Expected output: [1, 9, 9, 8]","class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+    def doubleIt(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        # Initialize a dummy node
+        dummy = ListNode()
+        current = dummy
+
+        # Traverse the original linked list
+        while head:
+            # Compute the doubled value
+            doubled_val = head.val * 2
+            # Create a new node with the doubled value
+            new_node = ListNode(doubled_val)
+            # Attach the new node to the new linked list
+            current.next = new_node
+            current = current.next
+            head = head.next
+
+        # Return the next node of the dummy node (head of the new linked list)
+        return dummy.next","from typing import Optional
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+class Solution:
+    def doubleIt(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(0)  # Dummy node to handle carry
+        dummy.next = head
+        curr = head
+        carry = 0
+
+        while curr:
+            curr.val = (curr.val * 2 + carry) % 10
+            carry = (curr.val * 2 + carry) // 10
+            if curr.next is None and carry:
+                curr.next = ListNode(carry)
+                break
+            curr = curr.next
+
+        return dummy.next
+
+
+# Example 1
+head = ListNode(1)
+head.next = ListNode(8)
+head.next.next = ListNode(9)
+
+solution = Solution()
+new_head = solution.doubleIt(head)
+
+# Print the modified linked list
+curr = new_head
+while curr:
+    print(curr.val, end="" "")
+    curr = curr.next
+# Output: 3 7 8
+
+# Example 2
+head = ListNode(9)
+head.next = ListNode(9)
+head.next.next = ListNode(9)
+
+solution = Solution()
+new_head = solution.doubleIt(head)
+
+# Print the modified linked list
+curr = new_head
+while curr:
+    print(curr.val, end="" "")
+    curr = curr.next
+# Output: 1 9 9 8","from typing import Optional
+class ListNode:
+  def __init__(self, val=0, next=None):
+    self.val = val
+    self.next = next
+
+class Solution:
+  def doubleIt(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    dummy = ListNode(0)  # Create a dummy node for convenience
+    curr = dummy
+    carry = 0
+
+    while head:
+      digit = head.val * 2 + carry
+      carry = digit // 10
+      curr.next = ListNode(digit % 10)
+      curr = curr.next
+      head = head.next
+
+    # Add the remaining carry if any
+    if carry:
+      curr.next = ListNode(carry)
+
+    return dummy.next  # Return the actual list without the dummy node
+head = ListNode(1)
+head.next = ListNode(8)
+head.next.next = ListNode(9)
+
+result = Solution().doubleIt(head)
+
+while result:
+  print(result.val, end="" -> "")
+  result = result.next
+
+print(""None"")",medium
