@@ -41,11 +41,15 @@ Process Overview
 
       - **Code Efficiency**: will be measured by analyzing the complexity of running time and space of the algorithm theoretically without running the code. The result is expressed using a large O notation, which represents the upper limit of the growth rate of the algorithm.
 
+**our benchmark result:**
+   [code correctness](Benchmark_correctness_ev.csv)
+   [code readability](Benchmark_readability_ev.csv)
+   [code complexity](Benchmark_complexity_ev.csv)
 
-5. **Ranking and Comparison**
-   - Choosing the TOP 2 of all of the 
-   - A comparative analysis is conducted to identify the strengths and weaknesses of each model based on the evaluation metrics.
 
-6. **Statistical Testing**
-   - Statistical tests are performed to ensure the validity and reliability of the evaluation results.
-   - The final rankings and insights are compiled into a comprehensive report.
+ 5. **Ranking and Comparison**
+   - Choosing the TOP 2 form all of the evaluation metrics 
+   
+6. **Continue the same steps as before and at the end conduct a Statistical Testing using T-test for the readability and Mann-Whitney U for the correctness and the complexity**
+   -The T-test is easily done is [excel]()
+   -The Mann-Whitney U can be done in python(you can use [this code]() )
